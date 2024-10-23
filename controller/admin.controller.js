@@ -1,5 +1,5 @@
 const AdminModel = require("../model/admin.model")
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const AdminController = {
     GetAll: async (req, res) => {
@@ -31,7 +31,7 @@ const AdminController = {
             salt
         })
     },
-    
+
 }
 
 module.exports = AdminController
