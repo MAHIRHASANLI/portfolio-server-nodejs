@@ -12,7 +12,7 @@ const AdminLogin = {
             const isValid = await bcrypt.compare(password, existedUsername.password);
             if (!isValid) res.send({ auth: false, message: "Password is incorrect!" });
             else {
-              const token =  jwt.sign({ id: existedUsername._id }, process.env.SECRET_KEY, {
+                const token = jwt.sign({ id: existedUsername._id }, process.env.SECRET_KEY, {
                     expiresIn: '2h'
                 })
                 res.send({

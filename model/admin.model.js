@@ -14,7 +14,6 @@ const AdminModel = new mongoose.model('AdminModel', new mongoose.Schema({
         required: true,
         trim: true,
         minlength: 5,
-        unique: true
     },
     isAdmin: {
         type: Boolean

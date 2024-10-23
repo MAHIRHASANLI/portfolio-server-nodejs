@@ -42,13 +42,21 @@ app.use('/mycontact', contact_router);
 //My Message
 app.use('/message', message_router);
 
-// app.listen(process.env.PORT, () => {
-//     console.log(`Connected PORT: ${process.env.PORT}`);
-// })
 
-// mongoose.connect(process.env.MY_CONNECT).then(() => {
-//     console.log("MongoDB Connected");
-// })
-mongoose.connect(process.env.MY_CONNECT.toString(), { useNewUrlParser: true, useUnifiedTopology: true }).then(() => app.listen(process.env.PORT, () => {
+// mongoose.connect(process.env.MY_CONNECT.toString(), { useNewUrlParser: true, useUnifiedTopology: true })
+//     .then(() => {
+//         console.log('MongoDB connected');
+//     })
+//     .catch(err => {
+//         console.error('MongoDB connection error:', err);
+//     });
+
+app.listen(process.env.PORT, () => {
     console.log(`Connected PORT: ${process.env.PORT}`);
-}))
+})
+
+mongoose.connect(process.env.MY_CONNECT).then(() => {
+    console.log("MongoDB Connected");
+})
+
+module.exports = app;
