@@ -21,7 +21,7 @@ const MessageController = {
             message: userMessage
         });
         const newObj = await NewObj.save();
-        res.status(200).send(newObj);
+
 
         // Transporter yaradın
         const transporter = nodemailer.createTransport({
@@ -30,17 +30,14 @@ const MessageController = {
             port: 465,
             secure: true,
             auth: {
-                user: 'hasanlimahir1@gmail.com', // Sizin Gmail adresiniz
-                pass: 'zvbiwztyiuwxqzqq', // Yaratdığınız App Password
+                user: process.env.SMTP_USER, // Sizin Gmail adresiniz
+                pass: process.env.SMTP_PASS, // Yaratdığınız App Password
             },
         });
 
         // Email göndərmə funksiyası
         const mailMessage = {
-            from: {
-                name: `${userName} ${userSurName}`,
-                address: userEmail
-            }, // Göndərən adresi istifadəçinin emaili
+            from: `"${userName} ${userSurName}" <${userEmail}>`, // Göndərən adresi istifadəçinin emaili
             to: "hasanlimahir1@gmail.com",
             subject: "Message from the Portfolio website.",
             html: `
@@ -54,13 +51,12 @@ const MessageController = {
         };
 
         // Emaili göndərmək
-        transporter.sendMail(mailMessage, (error, info) => {
-            if (error) {
-                console.log('Xəta baş verdi:', error);
-            } else {
-                console.log('Email uğurla göndərildi: ' + info.response);
-            }
-        });
+        try {
+            await transporter.sendMail(mailMessage);
+        } catch (error) {
+            console.log(error);
+        }
+        res.status(200).send(newObj);
     },
     Put: async (req, res) => {
         const newObj = {
